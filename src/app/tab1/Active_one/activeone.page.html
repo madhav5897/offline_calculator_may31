@@ -1,0 +1,1345 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<ion-content [fullscreen]="true">
+
+    <div class="header">
+      <div class="toolbar">
+        <div class="greeting">
+          <span>
+            <ion-icon *ngIf="memberspage" name="chevron-back-outline" (click)="prev()"></ion-icon>
+            <ion-icon *ngIf="dieseasepage" name="chevron-back-outline" (click)="prevondieseasepage()"></ion-icon>
+            <ion-icon *ngIf="coverspage" name="chevron-back-outline" (click)="prevoncoverspage()"></ion-icon> &nbsp;
+            Plan Details
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="content">
+
+    <div style="min-height: 75vh;" class="memberpage" *ngIf="!dieseasepage && !coverspage && memberspage ">
+      <div class="members">
+        <div class="information">
+
+          <div class="pincodecard">
+            <div class="pincode">
+              <div class="pincodelabel">
+                <span>Pincode </span>
+              </div>
+              <input type="number" class="pincodeinput" [(ngModel)]="pincode" (focusout)="setPincode()">
+              <div class="pincodezone">
+                <span>{{zone}}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="selecttenure">
+            <ion-select label="Tenure :" interface="popover" (ionChange)="setTenure($event)" placeholder="{{tenure}}">
+              <ion-select-option value="1">1 Year</ion-select-option>
+              <ion-select-option value="2">2 Year</ion-select-option>
+              <ion-select-option value="3">3 Year</ion-select-option>
+            </ion-select>
+          </div>
+
+          <!-- <div class="selecttenure" *ngIf="policyType=='familyFloater' ">
+            <ion-select label="Room Type :" interface="popover" (ionChange)="setRoomTypeFloater($event)"
+              placeholder="{{roomtypestring}}">
+              <ion-select-option value="0.85">Any</ion-select-option>
+              <ion-select-option value="0.925">Single Ac</ion-select-option>
+              <ion-select-option value="1">Base SI</ion-select-option>
+            </ion-select>
+          </div> -->
+
+          <div class="space"></div>
+          <div class="family">
+            <button (click)="setPolicyType('1')"
+              [ngStyle]="{'border': policyType=='multiIndividual' ? '1px solid red':'1px solid rgb(180 180 180)'}"
+              class="multi">Multi Individual
+              &nbsp;&nbsp;<i *ngIf="policyType=='multiIndividual' " class="fa tick">&#xf00c;</i></button>&nbsp;&nbsp;
+            <button (click)="setPolicyType('2')"
+              [ngStyle]="{'border': policyType=='familyFloater' ? '1px solid red':'1px solid rgb(180 180 180)'}"
+              class="multi">Family floater
+              &nbsp;&nbsp; <i class="fa tick" *ngIf="policyType=='familyFloater' ">&#xf00c;</i></button>
+          </div>
+          <br>
+          <br>
+        </div>
+        <br>
+        <div class="resetrow">
+          <button class="resetbutton" (click)="reset()">Reset
+          </button>
+        </div>
+
+        <div class="errorrow"
+          *ngIf="( noselectederror || pincodeerror ) && premiumshow==0 && policyType=='multiIndividual' ">
+
+          <p *ngIf="premiumshow==0 && !selectatleasttwomembers " class="errorsentense">Select atleast one
+            member. </p><br>
+          <p *ngIf="pincodeerror" class="errorsentense">Please Enter Pincode. </p><br>
+
+        </div>
+        <div *ngIf="selectadult1error" class="errorrow">
+          <p class="errorsentense">First Select Adult 1. </p>
+        </div>
+
+        <div>
+          <div class="addmembers">
+
+            <div *ngIf="policyType=='multiIndividual' ">
+
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected || member.preselected }"
+                  *ngIf="member.member=='Self' || member.member == 'Spouse'  ">
+                  <div (click)="preselect(member.id);focusInput(member)" class="avatar"><i
+                      style="font-size: 24px; color: rgb(62, 62, 64);" class="fa">&#xf007;</i></div>
+                  <div (click)="preselect(member.id);focusInput(member)" class="membertype">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="gender">
+                  </div>
+
+                  <div class="ageinput " [ngClass]="{ danger : member.ageerror }">
+                    <ion-select interface="popover" (ionChange)="setAge($event,member.id)" placeholder="Age">
+                      <ion-select-option *ngFor="let age of ageArray"
+                        [value]="age.value">{{age.string}}</ion-select-option>
+                    </ion-select>
+                  </div>
+
+                  <div class="toggleself">
+                    <button id="load1" *ngIf="member.selected" (click)=" selectmember(member.id);deleteselected=true;"
+                      class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:26px;color:rgb(233, 39, 39)"
+                          class="fa">&#xf014;</i></span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="policyType=='familyFloater' ">
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected || member.preselected }"
+                  *ngIf="member.member=='Adult 1' || member.member == 'Adult 2'  ">
+                  <div (click)="preselect(member.id);focusInput(member)" class="avatar">
+                    <i style="font-size: 24px; color: rgb(62, 62, 64);" class="fa">&#xf007;</i>
+                  </div>
+                  <div (click)="preselect(member.id);focusInput(member)" class="membertype">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="gender">
+                    <!-- <ion-select *ngIf="member.member=='Self' && premiumshow==0 " interface="popover"
+                    (ionChange)="setGender($event)" placeholder="Male">
+                    <ion-select-option value="Male">Male</ion-select-option>
+                    <ion-select-option value="Female">Female</ion-select-option>
+                  </ion-select>
+                  <span *ngIf=" premiumshow!==0 ">{{member.gender}}</span> -->
+                  </div>
+
+                  <div class="ageinput " [ngClass]="{ danger : member.ageerror }">
+                    <ion-select interface="popover" (ionChange)="setAge($event,member.id)" placeholder="Age">
+                      <ion-select-option *ngFor="let age of ageArray"
+                        [value]="age.value">{{age.string}}</ion-select-option>
+                    </ion-select>
+                  </div>
+
+                  <div class="toggleself">
+                    <button id="load1" *ngIf="member.selected" (click)=" selectmember(member.id);deleteselected=true;"
+                      class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:26px;color:rgb(233, 39, 39)"
+                          class="fa">&#xf014;</i></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- kids -->
+
+            <div *ngIf="policyType=='multiIndividual' ">
+              <!-- daughter add -->
+
+              <div class="member">
+                <div class="avatar"><img src="assets/images/daughter.png"></div>
+                <div class="membertype">
+                  <p>Daughter</p>
+                </div>
+                <div class="spacekids" style="width: 30%;">
+
+                </div>
+                <div class="toggle2">
+                  <button class="selectbutton" (click)="removedaughter(); "><img
+                      src="assets/icons/remove-member.png"></button>
+                  <span>{{daughtercounter}}</span>
+                  <button class="selectbutton" (click)="adddaughter(); "><img
+                      src="assets/icons/add-member.png"></button>
+                </div>
+              </div>
+
+              <!-- daughter selected -->
+
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected }"
+                  *ngIf="member.iskid==true && member.masterselected==true && member.gender=='Female' ">
+                  <div class="avatar"><img src="assets/images/daughter.png"></div>
+                  <div class="membertype">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="spacefather" style="width: 15%;"> </div>
+                  <div class="ageinput " [ngClass]="{ danger : member.ageerror }">
+                    <!-- <input class="enterage" type="number" (focusout)="selectmember(member.id)" [(ngModel)]=member.age
+                    placeholder="Age"> -->
+                    <ion-select placeholder="Age" interface="popover" (ionChange)="setAge($event,member.id)">
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="1">Less than 1
+                        Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="2">2 Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="3">3 Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="4">4 Year</ion-select-option>
+                      <ion-select-option value="5">5 Year</ion-select-option>
+                      <ion-select-option value="6">6 Year</ion-select-option>
+                      <ion-select-option value="7">7 Year</ion-select-option>
+                      <ion-select-option value="8">8 Year</ion-select-option>
+                      <ion-select-option value="9">9 Year</ion-select-option>
+                      <ion-select-option value="10">10 Year</ion-select-option>
+                      <ion-select-option value="11">11 Year</ion-select-option>
+                      <ion-select-option value="12">12 Year</ion-select-option>
+                      <ion-select-option value="13">13 Year</ion-select-option>
+                      <ion-select-option value="14">14 Year</ion-select-option>
+                      <ion-select-option value="15">15 Year</ion-select-option>
+                      <ion-select-option value="16">16 Year</ion-select-option>
+                      <ion-select-option value="17">17 Year</ion-select-option>
+                      <ion-select-option value="18">18 Year</ion-select-option>
+                      <ion-select-option value="19">19 Year</ion-select-option>
+                      <ion-select-option value="20">20 Year</ion-select-option>
+                      <ion-select-option value="21">21 Year</ion-select-option>
+                      <ion-select-option value="22">22 Year</ion-select-option>
+                      <ion-select-option value="23">23 Year</ion-select-option>
+                      <ion-select-option value="25">25 Year</ion-select-option>
+                      <ion-select-option value="25">25 Year</ion-select-option>
+
+                    </ion-select>
+
+                  </div>
+                  <div class="toggleself">
+                    <!-- <button id="load1" *ngIf="member.selected" (click)=" selectmember(member.id)" class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:26px;color:rgb(233, 39, 39)"
+                          class="fa">&#xf014;</i></span>
+                    </button> -->
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- son add -->
+
+              <div class="member">
+                <div class="avatar"><img src="assets/images/son.png"></div>
+                <div class="membertype">
+                  <p>Son</p>
+                </div>
+                <div class="spacekids" style="width: 30%;">
+                </div>
+
+                <div class="toggle2">
+                  <button class="selectbutton" (click)="removeson(); "><img
+                      src="assets/icons/remove-member.png"></button>
+                  <span>{{soncounter}}</span>
+                  <button class="selectbutton" (click)="addson(); "><img src="assets/icons/add-member.png"></button>
+                </div>
+              </div>
+
+              <!-- son selected -->
+
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected }"
+                  *ngIf="member.iskid==true && member.masterselected==true && member.gender=='Male' ">
+                  <div class="avatar"><img src="assets/images/son.png"></div>
+                  <div class="membertype">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="gender">
+                  </div>
+                  <div class="ageinput" [ngClass]="{ danger : member.ageerror }">
+                    <!-- <input type="number" (focusout)="selectmember(member.id)" class="enterage" [(ngModel)]=member.age
+                    placeholder="Age"> -->
+                    <ion-select placeholder="Age" interface="popover" (ionChange)="setAge($event,member.id)">
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="1">Less than 1
+                        Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="2">2 Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="3">3 Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="4">4 Year</ion-select-option>
+                      <ion-select-option value="5">5 Year</ion-select-option>
+                      <ion-select-option value="6">6 Year</ion-select-option>
+                      <ion-select-option value="7">7 Year</ion-select-option>
+                      <ion-select-option value="8">8 Year</ion-select-option>
+                      <ion-select-option value="9">9 Year</ion-select-option>
+                      <ion-select-option value="10">10 Year</ion-select-option>
+                      <ion-select-option value="11">11 Year</ion-select-option>
+                      <ion-select-option value="12">12 Year</ion-select-option>
+                      <ion-select-option value="13">13 Year</ion-select-option>
+                      <ion-select-option value="14">14 Year</ion-select-option>
+                      <ion-select-option value="15">15 Year</ion-select-option>
+                      <ion-select-option value="16">16 Year</ion-select-option>
+                      <ion-select-option value="17">17 Year</ion-select-option>
+                      <ion-select-option value="18">18 Year</ion-select-option>
+                      <ion-select-option value="19">19 Year</ion-select-option>
+                      <ion-select-option value="20">20 Year</ion-select-option>
+                      <ion-select-option value="21">21 Year</ion-select-option>
+                      <ion-select-option value="22">22 Year</ion-select-option>
+                      <ion-select-option value="23">23 Year</ion-select-option>
+                      <ion-select-option value="25">25 Year</ion-select-option>
+                      <ion-select-option value="25">25 Year</ion-select-option>
+
+                    </ion-select>
+
+                  </div>
+                  <div class="toggleself">
+                    <!-- <button id="load1" *ngIf="member.selected" (click)=" selectmember(member.id)" class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:26px;color:rgb(233, 39, 39)"
+                          class="fa">&#xf014;</i></span>
+                    </button> -->
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div *ngIf="policyType=='familyFloater' ">
+
+              <!-- kid add -->
+
+              <div class="member">
+                <div class="avatar">
+                  <i style="font-size: 24px; color: rgb(62, 62, 64);" class="fa">&#xf007;</i>
+                </div>
+                <div class="membertype">
+                  <p>Kids</p>
+                </div>
+                <div class="spacekids" style="width: 30%;">
+                </div>
+
+                <div class="toggle2">
+                  <button class="selectbutton" (click)="removedaughter(); "><img
+                      src="assets/icons/remove-member.png"></button>
+                  <span>{{daughtercounter}}</span>
+                  <button class="selectbutton" (click)="adddaughter(); "><img
+                      src="assets/icons/add-member.png"></button>
+                </div>
+              </div>
+
+              <!-- kid selected -->
+
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected }"
+                  *ngIf="member.iskid==true && member.masterselected==true && member.gender=='Female' ">
+                  <div class="avatar">
+                    <i style="font-size: 24px; color: rgb(62, 62, 64);" class="fa">&#xf007;</i>
+                  </div>
+                  <div class="membertype">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="spacekids" style="width: 10%;"></div>
+
+                  <div class="ageinput " [ngClass]="{ danger : member.ageerror }">
+
+                    <ion-select placeholder="Age" interface="popover" (ionChange)="setAge($event,member.id)">
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="1">Less than 1
+                        Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="2">2 Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="3">3 Year</ion-select-option>
+                      <ion-select-option *ngIf="policyType!=='multiIndividual' " value="4">4 Year</ion-select-option>
+                      <ion-select-option value="5">5 Year</ion-select-option>
+                      <ion-select-option value="6">6 Year</ion-select-option>
+                      <ion-select-option value="7">7 Year</ion-select-option>
+                      <ion-select-option value="8">8 Year</ion-select-option>
+                      <ion-select-option value="9">9 Year</ion-select-option>
+                      <ion-select-option value="10">10 Year</ion-select-option>
+                      <ion-select-option value="11">11 Year</ion-select-option>
+                      <ion-select-option value="12">12 Year</ion-select-option>
+                      <ion-select-option value="13">13 Year</ion-select-option>
+                      <ion-select-option value="14">14 Year</ion-select-option>
+                      <ion-select-option value="15">15 Year</ion-select-option>
+                      <ion-select-option value="16">16 Year</ion-select-option>
+                      <ion-select-option value="17">17 Year</ion-select-option>
+                      <ion-select-option value="18">18 Year</ion-select-option>
+                      <ion-select-option value="19">19 Year</ion-select-option>
+                      <ion-select-option value="20">20 Year</ion-select-option>
+                      <ion-select-option value="21">21 Year</ion-select-option>
+                      <ion-select-option value="22">22 Year</ion-select-option>
+                      <ion-select-option value="23">23 Year</ion-select-option>
+                      <ion-select-option value="25">25 Year</ion-select-option>
+                      <ion-select-option value="25">25 Year</ion-select-option>
+
+                    </ion-select>
+
+                  </div>
+                  <div class="toggleself">
+                    <!-- <button id="load1" *ngIf="member.selected" (click)=" selectmember(member.id)" class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:26px;color:rgb(233, 39, 39)"
+                          class="fa">&#xf014;</i></span>
+                    </button> -->
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <!-- below childrens -->
+            <div *ngIf=" policyType=='multiIndividual'   ">
+
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected || member.preselected }"
+                  *ngIf="member.member=='Father' || member.member =='Mother'">
+                  <div (click)="preselect(member.id);focusInput(member)" class="avatar"><img src={{member.img}}></div>
+                  <div (click)="preselect(member.id);focusInput(member)" class="membertype">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="spacefather" style="width: 15%;"> </div>
+
+                  <div class="ageinput " [ngClass]="{ danger : member.ageerror }">
+                    <ion-select interface="popover" (ionChange)="setAge($event,member.id)" placeholder="Age">
+                      <ion-select-option *ngFor="let age of ageArray2"
+                        [value]="age.value">{{age.string}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                  <div class="toggleself">
+                    <button id="load1" *ngIf="!member.selected  " (click)=" selectmember(member.id)"
+                      class="selectbutton">
+                    </button>
+                    <button id="load1" *ngIf="member.selected" (click)="selectmember(member.id);deleteselected=true;"
+                      class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:24px;color:rgb(219, 57, 57)"
+                          class="fa">&#xf014;</i></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected || member.preselected }"
+                  *ngIf="member.member=='Brother' || member.member =='Sister' ">
+                  <div (click)="preselect(member.id);focusInput(member)" class="avatar"><img src={{member.img}}></div>
+                  <div (click)="preselect(member.id);focusInput(member)" class="membertype">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="gender">
+                    <ion-select *ngIf="member.member=='Self' " interface="popover" (ionChange)="setGender($event)"
+                      placeholder="Male">
+                      <ion-select-option value="Male">Male</ion-select-option>
+                      <ion-select-option value="Female">Female</ion-select-option>
+                    </ion-select>
+                  </div>
+                  <div class="ageinput " [ngClass]="{ danger : member.ageerror }">
+                    <ion-select interface="popover" (ionChange)="setAge($event,member.id)" placeholder="Age">
+                      <ion-select-option *ngFor="let age of ageArray"
+                        [value]="age.value">{{age.string}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                  <div class="toggleself">
+                    <button id="load1" *ngIf="!member.selected  " (click)=" selectmember(member.id)"
+                      class="selectbutton">
+                    </button>
+                    <button id="load1" *ngIf="member.selected" (click)="selectmember(member.id);deleteselected=true;"
+                      class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:24px;color:rgb(219, 57, 57)"
+                          class="fa">&#xf014;</i></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngFor="let member of modelarray">
+                <div class="member" [ngClass]="{ danger : member.selected || member.preselected }"
+                  *ngIf="member.member=='Fatherinlaw' || member.member =='Motherinlaw' ">
+                  <div (click)="preselect(member.id);focusInput(member)" class="avatar"><img src={{member.img}}></div>
+                  <div (click)="preselect(member.id);focusInput(member)" class="membertype" style="width: 30%;">
+                    <p>{{member.member}}</p>
+                  </div>
+                  <div class="spacefather" style="width: 15%;"> </div>
+
+                  <div class="ageinput " [ngClass]="{ danger : member.ageerror }">
+                    <ion-select interface="popover" (ionChange)="setAge($event,member.id)" placeholder="Age">
+                      <ion-select-option *ngFor="let age of ageArray2"
+                        [value]="age.value">{{age.string}}</ion-select-option>
+                    </ion-select>
+                  </div>
+                  <div class="toggleself">
+                    <button id="load1" *ngIf="!member.selected  " (click)=" selectmember(member.id)"
+                      class="selectbutton">
+                    </button>
+                    <button id="load1" *ngIf="member.selected" (click)="selectmember(member.id);deleteselected=true;"
+                      class="selectbutton">
+                      <span class="shareicon"> <i style="font-size:24px;color:rgb(219, 57, 57)"
+                          class="fa">&#xf014;</i></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <br>
+
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="suminsured" >
+        <div class="select2">
+          <span>Select Cover Amount</span>
+        </div>
+
+        <div class="selectsum" *ngIf="policyType=='familyFloater' ">
+
+          <ion-select label="Sum Insured :" interface="popover" (ionChange)="setSI($event,'sum')"
+            placeholder="{{sumtoshow}}">
+            <ion-select-option value="SI_200000">2 Lacs</ion-select-option>
+            <ion-select-option value="SI_300000">3 Lacs</ion-select-option>
+            <ion-select-option value="SI_400000">4 Lacs</ion-select-option>
+            <ion-select-option value="SI_500000">5 Lacs</ion-select-option>
+            <ion-select-option value="SI_700000">7 Lacs</ion-select-option>
+            <ion-select-option value="SI_1000000">10 Lacs</ion-select-option>
+            <ion-select-option value="SI_1500000">15 Lacs</ion-select-option>
+            <ion-select-option value="SI_2000000">20 Lacs</ion-select-option>
+            <ion-select-option value="SI_2500000">25 Lacs</ion-select-option>
+            <ion-select-option value="SI_5000000">50 Lacs</ion-select-option>
+            <ion-select-option value="SI_10000000">1 Cr</ion-select-option>
+            <ion-select-option value="SI_20000000">2 Cr</ion-select-option>
+            <ion-select-option value="SI_30000000">3 Cr</ion-select-option>
+            <ion-select-option value="SI_40000000">4 Cr</ion-select-option>
+            <ion-select-option value="SI_50000000">5 Cr</ion-select-option>
+            <ion-select-option value="SI_60000000">6 Cr</ion-select-option>
+          </ion-select>
+        </div>
+
+        <div *ngFor=" let member of modelarray">
+          <div class="selectsum" *ngIf="member.selected && policyType=='multiIndividual'   ">
+            <ion-select label="{{member.member}}" interface="popover" (ionChange)="setSI($event,member.id)"
+              placeholder="{{member.suminlakhs}}">
+              <ion-select-option value="SI_200000">2 Lacs</ion-select-option>
+              <ion-select-option value="SI_300000">3 Lacs</ion-select-option>
+              <ion-select-option value="SI_400000">4 Lacs</ion-select-option>
+              <ion-select-option value="SI_500000">5 Lacs</ion-select-option>
+              <ion-select-option value="SI_700000">7 Lacs</ion-select-option>
+              <ion-select-option value="SI_1000000">10 Lacs</ion-select-option>
+              <ion-select-option value="SI_1500000">15 Lacs</ion-select-option>
+              <ion-select-option value="SI_2000000">20 Lacs</ion-select-option>
+              <ion-select-option  value="SI_2500000">25 Lacs</ion-select-option>
+              <ion-select-option  value="SI_5000000">50 Lacs</ion-select-option>
+              <ion-select-option  value="SI_10000000">1 Cr</ion-select-option>
+              <ion-select-option  value="SI_20000000">2 Cr</ion-select-option>
+              <ion-select-option  value="SI_30000000">3 Cr</ion-select-option>
+              <ion-select-option  value="SI_40000000">4 Cr</ion-select-option>
+              <ion-select-option  value="SI_50000000">5 Cr</ion-select-option>
+              <ion-select-option  value="SI_60000000">6 Cr</ion-select-option>
+            </ion-select>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Deisease Page -->
+    <div class="dieseasepage" *ngIf="dieseasepage && !memberspage && !coverspage">
+      <div class="questions">
+        <span class="heading2">Health Questionnaire</span><br>
+        <div class="space"></div>
+        <span class="note">Has any of the members to be insured diagonosed with or undergoing medical treatment for any
+          of
+          the below ?</span>
+
+        <div class="question">
+          <span class="disease">Asthama</span><br>
+          <div *ngFor="let member of modelarray">
+            <div class="row" *ngIf="member.selected">
+              <img class="img" src="{{member.img}}">
+              <span class="text">{{member.member}}</span>
+              <button class="yesbutton"
+                (click)="member.ASTHMA=true;setChronic(member.id,'ASTHMA');inccounter(member.id)"
+                [ngClass]="{ danger : member.ASTHMA == true }">Yes</button>
+              <button class="nobutton"
+                (click)="member.ASTHMA=false;setChronic(member.id,'ASTHMA');deccounter(member.id)"
+                [ngClass]="{ danger : member.ASTHMA == false }">No</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="disease">Hypertension</span><br>
+          <div *ngFor="let member of modelarray">
+            <div class="row" *ngIf="member.selected">
+              <img class="img" src="{{member.img}}">
+              <span class="text">{{member.member}}</span>
+              <button class="yesbutton" (click)="member.HYPTN=true;setChronic(member.id,'HYPTN');inccounter(member.id);"
+                [ngClass]="{ danger : member.HYPTN == true }">Yes</button>
+              <button class="nobutton" (click)="member.HYPTN=false;setChronic(member.id,'HYPTN');deccounter(member.id);"
+                [ngClass]="{ danger : member.HYPTN == false }">No</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="disease">Hyperlipidaemia</span><br>
+          <div *ngFor="let member of modelarray">
+            <div class="row" *ngIf="member.selected">
+              <img class="img" src="{{member.img}}">
+              <span class="text">{{member.member}}</span>
+              <button class="yesbutton"
+                (click)="member.HYPRLIP=true;setChronic(member.id,'HYPRLIP');inccounter(member.id);"
+                [ngClass]="{ danger : member.HYPRLIP == true }">Yes</button>
+              <button class="nobutton"
+                (click)="member.HYPRLIP=false;deccounter(member.id);setChronic(member.id,'HYPRLIP');"
+                [ngClass]="{ danger : member.HYPRLIP == false }">No</button>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="disease">Diabetes</span><br>
+          <div *ngFor="let member of modelarray">
+            <div class="row" *ngIf="member.selected">
+              <img class="img" src="{{member.img}}">
+              <span class="text">{{member.member}}</span>
+              <button class="yesbutton"
+                (click)="member.DIABT=true;setChronic(member.id,'DIABT');inccounter(member.id);"
+                [ngClass]="{ danger : member.DIABT == true }">Yes</button>
+              <button class="nobutton" (click)="member.DIABT=false;deccounter(member.id);setChronic(member.id,'DIABT');"
+                [ngClass]="{ danger : member.DIABT == false }">No</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="question">
+          <span class="disease">PTCA</span><br>
+          <div *ngFor="let member of modelarray">
+            <div class="row" *ngIf="member.selected">
+              <img class="img" src="{{member.img}}">
+              <span class="text">{{member.member}}</span>
+              <button class="yesbutton" (click)="member.PTCA=true;setChronic(member.id,'PTCA');inccounter(member.id)"
+                [ngClass]="{ danger : member.PTCA == true }">Yes</button>
+              <button class="nobutton" (click)="member.PTCA=false;deccounter(member.id);setChronic(member.id,'PTCA');"
+                [ngClass]="{ danger : member.PTCA == false }">No</button>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="question">
+          <span class="disease">COPD</span><br>
+          <div *ngFor="let member of modelarray">
+            <div class="row" *ngIf="member.selected">
+              <img class="img" src="{{member.img}}">
+              <span class="text">{{member.member}}</span>
+              <button class="yesbutton" (click)="member.COPD=true;setChronic(member.id,'COPD');inccounter(member.id);"
+                [ngClass]="{ danger : member.COPD == true }">Yes</button>
+              <button class="nobutton" (click)="member.COPD=false;deccounter(member.id);setChronic(member.id,'COPD');"
+                [ngClass]="{ danger : member.COPD == false }">No</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="question">
+          <span class="disease">High BMI</span><br>
+          <div *ngFor="let member of modelarray">
+            <div class="row" *ngIf="member.selected">
+              <img class="img" src="{{member.img}}">
+              <span class="text">{{member.member}}</span>
+              <button class="yesbutton"
+                (click)="member.HBMI=true;setChronic(member.id,'HBMI');inccounter(member.id);"
+                [ngClass]="{ danger : member.HBMI == true }">Yes</button>
+              <button class="nobutton"
+                (click)="member.HBMI=false;deccounter(member.id);setChronic(member.id,'HBMI');"
+                [ngClass]="{ danger : member.HBMI == false }">No</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Covers Page   "!memberspage && !dieseasepage && coverspage"-->
+    <div class="coverspage" *ngIf="!memberspage && !dieseasepage && coverspage">
+      <div class="select">
+        <span>Optional Coverages</span>
+      </div>
+
+      
+
+      <!-- Per Claim Deductable -->
+      <div class="card4" [ngStyle]="{'border' : coverArray[1].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+          <span class="covertitle">{{coverArray[1].name}}</span><br>
+          <div class="selectedicon">
+            <button class="removebutton" *ngIf="coverArray[1].selected"
+              (click)="coverArray[1].selected=false;removePerClaimDeductable()">Remove</button>
+            <button class="addbutton" *ngIf="!coverArray[1].selected"
+              (click)="coverArray[1].selected=true;selectPerClaimDeductable()">Add +</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[1].selected && policyType=='multiIndividual'  ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+
+              <ion-select class="coversum" label="{{member.member}} Deductable Amount :" interface="popover"
+                (ionChange)="setSIPerClaimDeductable($event, member.id)" placeholder="15,000">
+                <ion-select-option value="15000">15,000</ion-select-option>
+                <ion-select-option value="25000">25,000</ion-select-option>
+              </ion-select>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.perclaimdeductable && coverArray[1].selected"
+                  (click)="member.perclaimdeductable=true;selectMemberPerClaim(member.id)" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.perclaimdeductable && coverArray[1].selected" class="selectbutton"
+                  (click)="member.perclaimdeductable=false;selectMemberPerClaim(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+        <div class="covermembers" *ngIf="coverArray[1].selected && policyType=='familyFloater'  ">
+          <div>
+            <div class="membersum">
+
+              <ion-select class="coversum" label=" Deductable Amount :" interface="popover"
+                (ionChange)="setSIPerClaimDeductable($event, 0)" placeholder="15,000">
+                <ion-select-option value="15000">15,000</ion-select-option>
+                <ion-select-option value="25000">25,000</ion-select-option>
+              </ion-select>
+              <br>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+
+      <!-- Chronic Care -->
+      <div class="card4" *ngIf="dieseaseselected"
+        [ngStyle]="{'border' : coverArray[2].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+          <span class="covertitle">{{coverArray[2].name}}</span><br>
+          <div class="selectedicon">
+            <button class="removebutton" *ngIf="coverArray[2].selected"
+              (click)="coverArray[2].selected=false;removeChronicCare()">Remove</button>
+            <button class="addbutton" *ngIf="!coverArray[2].selected"
+              (click)="coverArray[2].selected=true;selectChronicCare()">Add +</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[2].selected ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected && member.dieseasecounter!==0">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 60%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.chroniccare "
+                  (click)="member.chroniccare=true;selectMemberChronicCare(member.id)" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.chroniccare && coverArray[2].selected" class="selectbutton"
+                  (click)="member.chroniccare=false;selectMemberChronicCare(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+
+      <!-- Reduction in specific diesease waiting period -->
+      <div class="card4" *ngIf="dieseaseselected"
+        [ngStyle]="{'border' : coverArray[3].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+          <span class="covertitle">{{coverArray[3].name}}</span><br>
+          <div class="selectedicon">
+            <button class="removebutton" *ngIf="coverArray[3].selected"
+              (click)="coverArray[3].selected=false;removeSpecificDiesease()">Remove</button>
+            <button class="addbutton" *ngIf="!coverArray[3].selected"
+              (click)="coverArray[3].selected=true;selectSpecificDiesease()">Add +</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[3].selected   ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected && member.dieseasecounter!==0">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 60%;">
+              </div>
+
+              <div class="toggleself2">
+                <button
+                  *ngIf="!member.specificdiesease && coverArray[3].selected && this.policyType=='multiIndividual' "
+                  (click)="member.specificdiesease=true;selectMemberSpecificDiesease(member.id)"
+                  class="selectbutton"><img src="assets/icons/add.png"></button>
+                <button *ngIf="member.specificdiesease && coverArray[3].selected && this.policyType=='multiIndividual' "
+                  class="selectbutton"
+                  (click)="member.specificdiesease=false;selectMemberSpecificDiesease(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+              <br>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
+
+      <!-- Reduction In PED Waiting Period-->
+      <div class="card4" [ngStyle]="{'border' : coverArray[4].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[4].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[4].selected"
+              (click)="coverArray[4].selected=true;selectPedWaiting()">Add +</button>
+
+            <button class="removebutton" *ngIf="coverArray[4].selected"
+              (click)="coverArray[4].selected=false;removePedWaiting()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[4].selected && policyType=='multiIndividual' ">
+
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              <ion-select class="coversum" label="{{member.member}} Period" interface="popover"
+                (ionChange)="setSIPedWaiting($event, member.id)" placeholder=" 3 year to 2 year">
+                <ion-select-option value="3to2">3 year to 2 year</ion-select-option>
+                <ion-select-option value="3to1">3 year to 1 year</ion-select-option>
+
+              </ion-select>
+              &nbsp;&nbsp;
+
+              <div class="toggleself2">
+                <button *ngIf="!member.pedwaiting && coverArray[4].selected"
+                  (click)="member.pedwaiting=true;selectMemberPedWaiting(member.id)" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.pedwaiting && coverArray[4].selected" class="selectbutton"
+                  (click)="member.pedwaiting=false;selectMemberPedWaiting(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancer Hospitalization Booster-->
+      <div *ngIf="plancode==3" class="card4" [ngStyle]="{'border' : coverArray[5].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[5].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[5].selected"
+              (click)="coverArray[5].selected=true;selectCancerBooster()">Add +</button>
+
+            <button class="removebutton" *ngIf="coverArray[5].selected"
+              (click)="coverArray[5].selected=false;removeCancerBooster()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[5].selected && policyType=='multiIndividual' ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 70%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.cancerbooster && coverArray[5].selected"
+                  (click)="member.cancerbooster=true;selectMemberCancerBooster(member.id)" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.cancerbooster && coverArray[5].selected" class="selectbutton"
+                  (click)="member.cancerbooster=false;selectMemberCancerBooster(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Compassionate Visit-->
+      <div class="card4" [ngStyle]="{'border' : coverArray[6].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[6].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[6].selected"
+              (click)="coverArray[6].selected=true;selectCompassionateVisit()">Add +</button>
+
+            <button class="removebutton" *ngIf="coverArray[6].selected"
+              (click)="coverArray[6].selected=false;removeCompassionateVisit()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[6].selected && policyType=='multiIndividual' ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 70%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.compassionatevisit && coverArray[6].selected"
+                  (click)="member.compassionatevisit=true;selectMemberCompassionateVisit(member.id)"
+                  class="selectbutton"><img src="assets/icons/add.png"></button>
+                <button *ngIf="member.compassionatevisit && coverArray[6].selected" class="selectbutton"
+                  (click)="member.compassionatevisit=false;selectMemberCompassionateVisit(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Annual Screening Package -->
+      <div class="card4" *ngIf="plancode!==3" [ngStyle]="{'border' : coverArray[7].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[7].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[7].selected"
+              (click)="coverArray[7].selected=true;selectAnnualScreening()">Add +</button>
+
+            <button class="removebutton" *ngIf="coverArray[7].selected"
+              (click)="coverArray[7].selected=false;removeAnnualScreening()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[7].selected && policyType=='multiIndividual' ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 70%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.compassionatevisit && coverArray[7].selected"
+                  (click)="member.compassionatevisit=true;selectMemberAnnualScreening(member.id)"
+                  class="selectbutton"><img src="assets/icons/add.png"></button>
+                <button *ngIf="member.compassionatevisit && coverArray[7].selected" class="selectbutton"
+                  (click)="member.compassionatevisit=false;selectMemberAnnualScreening(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!--critical illnes  -->
+
+      <div class="card4" [ngStyle]="{'border' : coverArray[8].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[8].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[8].selected"
+              (click)="coverArray[8].selected=true;selectCriticalIllness()">Add +</button>
+            <button class="removebutton" *ngIf="coverArray[8].selected"
+              (click)="coverArray[8].selected=false;removeCriticalIllness()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[8].selected">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected && !member.iskid">
+              <ion-select class="coversum" label="SI {{member.member}} :" interface="popover"
+                (ionChange)="setSICriticalIllness($event, member.id)" placeholder="20 Lacs">
+                <ion-select-option value="1000000">10 Lacs</ion-select-option>
+                <ion-select-option value="1500000">15 Lacs</ion-select-option>
+                <ion-select-option value="2000000">20 Lacs</ion-select-option>
+                <ion-select-option value="2500000">25 Lacs</ion-select-option>
+
+              </ion-select>
+              <div class="toggleself">
+                <button *ngIf="!member.criticalillness && coverArray[8].selected"
+                  (click)="member.criticalillness=true;selectMemberCriticalIllness()" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.criticalillness && coverArray[8].selected" class="selectbutton"
+                  (click)="member.criticalillness=false;selectMemberCriticalIllness()"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- personal accident    id [9] in covers -->
+
+      <div class="card4" [ngStyle]="{'border' : coverArray[9].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[9].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[9].selected" (click)="coverArray[9].selected=true;">Add +
+            </button>
+
+            <button class="removebutton" *ngIf="coverArray[9].selected"
+              (click)="coverArray[9].selected=false;removePersonalAccident()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[9].selected">
+
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+<div style="width: 92%;">
+              <ion-select class="coversum"  label=" {{member.member}} SI:"
+                interface="popover" (ionChange)="setSIPersonalAccident($event, member.id)"
+                placeholder="{{member.pASI}}">
+                <ion-select-option *ngIf="plancode!==3" value="1000000">10 Lacs</ion-select-option>
+                <ion-select-option *ngIf="plancode!==3" value="1500000">15 Lacs</ion-select-option>
+                <ion-select-option *ngIf="plancode!==3" value="2000000">20 Lacs</ion-select-option>
+                <ion-select-option *ngIf="plancode!==3" value="2500000">25 Lacs</ion-select-option>
+                <ion-select-option *ngIf="plancode==3" value="5000000">50 Lacs</ion-select-option>
+              </ion-select>
+              &nbsp;&nbsp;
+              <div class="rfdiv">
+                <ion-select class="RFclass" label="Duty :" interface="popover"
+                  (ionChange)="setRFPersonalAccident($event, member.id)" placeholder="Select">
+                  <div *ngFor="let risk of RiskFactorData">
+  
+                    <ion-select-option *ngIf="risk.Risk_class!==4"
+                      [value]="risk">{{risk.Nature_Of_Duty}}</ion-select-option>
+                  </div>
+                </ion-select>
+                <p> Risk Factor &nbsp;&nbsp; {{member.riskfactor}}</p>
+              </div>
+            </div>
+              &nbsp;&nbsp;
+
+              <div class="toggleself2" *ngIf="member.riskfactor!==null">
+                <button id="load1" *ngIf="!member.personalaccident && coverArray[9].selected"
+                  (click)="member.personalaccident=true;selectMemberPersonalAccident()" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button id="load1" *ngIf="member.personalaccident && coverArray[9].selected" class="selectbutton"
+                  (click)="member.personalaccident=false;selectMemberPersonalAccident()"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Chronic Management Program OPD   [10]  -->
+      <div class="card4" *ngIf="dieseaseselected"
+        [ngStyle]="{'border' : coverArray[10].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[10].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[10].selected"
+              (click)="coverArray[10].selected=true;selectChronicManagement()">Add +</button>
+
+            <button class="removebutton" *ngIf="coverArray[10].selected"
+              (click)="coverArray[10].selected=false;removeChronicManagement()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[10].selected  ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 70%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.chronicmanagement && coverArray[10].selected"
+                  (click)="member.chronicmanagement=true;selectMemberChronicManagement(member.id)"
+                  class="selectbutton"><img src="assets/icons/add.png"></button>
+                <button *ngIf="member.chronicmanagement && coverArray[10].selected" class="selectbutton"
+                  (click)="member.chronicmanagement=false;selectMemberChronicManagement(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Medical Opinion    [11 ]-->
+      <div class="card4" [ngStyle]="{'border' : coverArray[11].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+
+          <span class="covertitle">{{coverArray[11].name}}</span><br>
+          <div class="selectedicon">
+            <button class="addbutton" *ngIf="!coverArray[11].selected"
+              (click)="coverArray[11].selected=true;selectCompassionateVisit()">Add +</button>
+
+            <button class="removebutton" *ngIf="coverArray[11].selected"
+              (click)="coverArray[11].selected=false;removeCompassionateVisit()">Remove</button>
+          </div>
+        </div>
+
+        <div class="covermembers" *ngIf="coverArray[11].selected && policyType=='multiIndividual' ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 70%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.secondmedical && coverArray[11].selected"
+                  (click)="member.secondmedical=true;selectMemberSecondMedical(member.id)" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.secondmedical && coverArray[11].selected" class="selectbutton"
+                  (click)="member.secondmedical=false;selectMemberSecondMedical(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Durable Equipment -->
+
+      <div class="card4" *ngIf="plancode==3" [ngStyle]="{'border' : coverArray[13].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/cover.png">
+          <span class="covertitle">{{coverArray[13].name}}</span><br>
+          <div class="selectedicon">
+            <button class="removebutton" *ngIf="coverArray[13].selected"
+              (click)="coverArray[13].selected=false;removeDurableEquipment()">Remove</button>
+            <button class="addbutton" *ngIf="!coverArray[13].selected"
+              (click)="coverArray[13].selected=true;selectDurableEquipment()">Add</button>
+          </div>
+        </div>
+        <div class="covermembers" *ngIf="coverArray[13].selected && policyType=='multiIndividual' ">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 70%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.durableequipment && coverArray[13].selected"
+                  (click)="member.durableequipment=true;selectMemberDurableEquipment()" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.durableequipment && coverArray[13].selected" class="selectbutton"
+                  (click)="member.durableequipment=false;selectMemberDurableEquipment()"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+                  <!-- room type -->
+                  <div class="card4"  [ngStyle]="{'border' : coverArray[1].selected ? '1px solid red' : '' }">
+                    <div class="covername">
+                      <img class="covericon" src="assets/images/cover.png">
+                      <span class="covertitle">{{coverArray[0].name}}</span><br>
+                      <div class="selectedicon">
+                      </div>
+                    </div>
+            
+                    <div class="covermembers"  *ngIf="!(plancode==3 && policyType=='familyFloater')" >
+                      <div *ngFor="let member of modelarray">
+                        <div class="membersum" *ngIf="member.selected ">
+                          <ion-select label="{{member.member}} Room Type :" interface="popover" (ionChange)="setRoomType($event,member)"
+                          placeholder="{{roomtypestring}}">
+                          <ion-select-option value="0.85">Any</ion-select-option>
+                          <ion-select-option value="0.925">Single Ac</ion-select-option>
+                          <ion-select-option value="1">Base SI</ion-select-option>
+                        </ion-select>
+                          <div class="toggleself2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+      
+                    <div class="covermembers" *ngIf="policyType=='familyFloater' && plancode==3 " >
+                      <div *ngFor="let member of modelarray">
+                        <div class="membersum" *ngIf="member.id==0">
+                          <ion-select label="Room Type For All :" interface="popover" (ionChange)="setRoomType($event,member)"
+                          placeholder="{{roomtypestring}}">
+                          <ion-select-option value="0.85">Any</ion-select-option>
+                          <ion-select-option value="0.925">Single Ac</ion-select-option>
+                          <ion-select-option value="1">Base SI</ion-select-option>
+                        </ion-select>
+                          <div class="toggleself2">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <br>
+                  </div>
+      
+      <!-- ------------------ -->
+
+      <div class="select" *ngIf="plancode==3">
+        <span>Health Add-Ons</span>
+      </div>
+
+      <div class="card4" *ngIf="plancode==3" [ngStyle]="{'border' : coverArray[14].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/healthaddon.png">
+          <span class="covertitle">{{coverArray[14].name}}</span><br>
+          <div class="selectedicon">
+            <button class="removebutton" *ngIf="coverArray[14].selected"
+              (click)="coverArray[14].selected=false;removeVaccineCover()">Remove</button>
+            <button class="addbutton" *ngIf="!coverArray[14].selected"
+              (click)="coverArray[14].selected=true;selectVaccineCover()">Add</button>
+          </div>
+        </div>
+        <div class="covermembers" *ngIf="coverArray[14].selected">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              <ion-select class="coversum" label="{{member.member}} :" interface="popover"
+                (ionChange)="setSIVaccineCover($event, member.id)" placeholder="1000">
+                <ion-select-option value="500">500</ion-select-option>
+                <ion-select-option value="750">750 </ion-select-option>
+                <ion-select-option value="1000">1000 </ion-select-option>
+              </ion-select>
+              <div class="toggleself2">
+                <button *ngIf="!member.vaccinecover && coverArray[14].selected"
+                  (click)="member.vaccinecover=true;selectMemberVaccineCover(member.id)" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.vaccinecover && coverArray[14].selected" class="selectbutton"
+                  (click)="member.vaccinecover=false;selectMemberVaccineCover(member.id)"><img
+                    src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--  -->
+
+      <div class="card4" *ngIf="plancode==3" [ngStyle]="{'border' : coverArray[15].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/healthaddon.png">
+          <span class="covertitle">{{coverArray[15].name}}</span><br>
+          <div class="selectedicon">
+            <button class="removebutton" *ngIf="coverArray[15].selected"
+              (click)="coverArray[15].selected=false;removeTeleOpd()">Remove</button>
+            <button class="addbutton" *ngIf="!coverArray[15].selected"
+              (click)="coverArray[15].selected=true;selectTeleOpd()">Add</button>
+          </div>
+        </div>
+        <div class="covermembers" *ngIf="coverArray[15].selected">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              &nbsp;&nbsp;<p>{{member.member}}</p>
+
+              <div class="space" style="width: 60%;">
+              </div>
+
+              <div class="toggleself2">
+                <button *ngIf="!member.teleopd && coverArray[15].selected"
+                  (click)="member.teleopd=true;selectMemberTeleOpd()" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.teleopd && coverArray[15].selected" class="selectbutton"
+                  (click)="member.teleopd=false;selectMemberTeleOpd()"><img src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!--  -->
+
+      <div class="card4" *ngIf="plancode==3" [ngStyle]="{'border' : coverArray[16].selected ? '1px solid red' : '' }">
+        <div class="covername">
+          <img class="covericon" src="assets/images/healthaddon.png">
+          <span class="covertitle">{{coverArray[16].name}}</span><br>
+          <div class="selectedicon">
+            <button class="removebutton" *ngIf="coverArray[16].selected"
+              (click)="coverArray[16].selected=false;removeOpdAddOn()">Remove</button>
+            <button class="addbutton" *ngIf="!coverArray[16].selected"
+              (click)="coverArray[16].selected=true;selectOpdAddOn()">Add</button>
+          </div>
+        </div>
+        <div class="covermembers" *ngIf="coverArray[16].selected">
+          <div *ngFor="let member of modelarray">
+            <div class="membersum" *ngIf="member.selected">
+              <ion-select style="width: 50%;" class="coversum" label="{{member.member}} :" interface="popover"
+                (ionChange)="setOptionAddon($event, member.id)" placeholder="In-Person GP unlimited consultations">
+                <ion-select-option value="In-Person GP unlimited consultations">In-Person GP unlimited
+                  consultations</ion-select-option>
+                <ion-select-option value="In-Person/Tele/Video GP unlimited consultations">In-Person/Tele/Video GP
+                  unlimited consultations</ion-select-option>
+                <ion-select-option
+                  value="In-Person/Tele/Video GP unlimited and specialist consultations">In-Person/Tele/Video GP
+                  unlimited and specialist consultations</ion-select-option>
+              </ion-select>
+              <div class="toggleself2">
+                <button *ngIf="!member.opdaddon && coverArray[16].selected"
+                  (click)="member.opdaddon=true;selectMemberOpdAddOn()" class="selectbutton"><img
+                    src="assets/icons/add.png"></button>
+                <button *ngIf="member.opdaddon && coverArray[16].selected" class="selectbutton"
+                  (click)="member.opdaddon=false;selectMemberOpdAddOn()"><img src="assets/icons/red-tick.png"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- -------------------------------------------------- -->
+    </div>
+  </div>
+
+  <div class="footer">
+
+    <div>
+      <div class="planname"><span>{{plan}}</span></div>
+      <span *ngIf="diffrence!==0 " class="diffrence"> <span *ngIf="diffrence>=0">+</span> {{diffrence}}</span>
+      <br>
+      <div class="pricefooter">
+
+        <span class="pricedigits"><i class="fa rupee">&#xf156;</i>
+          {{masterpremium}}<span class="yearfooter">/year</span></span>
+      </div>
+      <div class="cover">
+        <span><span *ngIf="policyType=='familyFloater'  ">Cover: <span class="red">{{sumtoshow}}</span>
+            &nbsp;&nbsp;</span>Tenure: <span class="red">{{tenure}}</span> </span>
+      </div>
+      <div *ngIf="masterpremium!==0" class="toolbar2">
+        <div>
+          <span class="insuring">Insuring</span>&nbsp;<span class="self">{{membersString}}</span>
+        </div>
+        <div>
+        </div>
+      </div>
+
+    </div>
+    <div class="nextbutton">
+      <button class="next" *ngIf="memberspage" (click)="next()">Next</button>
+      <button class="next" *ngIf="dieseasepage" (click)="nextondieseasepage();">Next</button>
+      <button class="next" *ngIf="coverspage" (click)="nextoncoverspage()">Next</button>
+
+    </div>
+  </div>
+
+</ion-content>

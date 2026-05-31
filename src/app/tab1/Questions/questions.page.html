@@ -1,0 +1,40 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<ion-content [fullscreen]="true">
+
+  <div class="header">
+    <div class="toolbar">
+      <div class="greeting">
+        <span><ion-icon name="chevron-back-outline" (click)="prev()"></ion-icon> &nbsp;
+          Plan Details
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="heading">
+      <span>Summary</span>
+    </div>
+  </div>
+
+
+  <div class="footer2">
+    <div>
+      <div class="planname"><span>Active Health Platinum Enhanced Plan</span></div>
+      <div class="pricefooter">
+        <span class="pricedigits"><i class="fa rupee">&#xf156;</i>
+          6,862<span class="yearfooter">/year</span></span>
+      </div>
+      <div class="cover2">
+        <span>Cover: <span class="red">5 Lakh</span> Tenure: <span class="red">1 year</span> </span>
+      </div>
+    </div>
+    <div class="nextbutton">
+      <button class="next" (click)="next()">Next</button>
+    </div>
+  </div>
+
+</ion-content>

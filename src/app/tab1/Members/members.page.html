@@ -1,0 +1,93 @@
+<ion-content [fullscreen]="true">
+<div class="content">
+  <div class="header">
+    <div class="toolbar">
+      <div class="greeting">
+        <span>
+          <ion-icon name="chevron-back-outline" (click)="prev()"></ion-icon> &nbsp;
+          Proposer Details
+        </span>
+      </div>
+    </div>
+  </div>
+<br>
+  <!-- <div class="personaldetails">
+    <span class="detailslabel">Proposer Details</span>
+  </div> -->
+
+  <form [formGroup]="form">
+
+    <div class="conainer">
+      <div class="inputrow">
+        <label class="inputlabel">First Name<span>*</span></label><br>
+        <input (focusout)="setFirstName()" class="inputcustom" placeholder="First Name" type="text" formControlName="firstname">
+        <div class="warning red-text font-error"
+          *ngIf="form.get('firstname')?.touched && form.get('firstname')?.errors?.['required']">
+          Please Enter First Name
+        </div>
+      </div>
+
+      <div class="inputrow">
+        <label class="inputlabel">Middle Name</label><br>
+        <input (focusout)="setMiddleName()" class="inputcustom" placeholder="Middle Name"  type="text" formControlName="middlename">
+      </div>
+      <div class="inputrow">
+        <label class="inputlabel">Last Name<span>*</span></label><br>
+        <input (focusout)="setLastName()" class="inputcustom" placeholder="Last Name" type="text" formControlName="lastname">
+        <div class="warning red-text font-error"
+          *ngIf="form.get('lastname')?.touched && form.get('lastname')?.errors?.['required']">
+          Please Enter Last Name
+        </div>
+      </div>
+      <div class="inputrow">
+        <label class="inputlabel">Mobile No<span>*</span></label><br>
+        <input (focusout)="setMobile()" type="text" class="inputcustom" placeholder="Mobile Number" maxlength="10" formControlName="mobile"
+          (keypress)="($event.charCode >= 48 && $event.charCode < 58)" NumberOnly>
+        <div class="warning red-text font-error"
+          *ngIf="form.get('mobile')?.touched && form.get('mobile')?.errors?.['required']">
+          Please Enter Mobile Number
+        </div>
+        <div class="warning red-text font-error" *ngIf="form.get('mobile')?.errors?.['pattern']">
+          Please Enter Valid Mobile Number
+        </div>
+      </div>
+      <div class="inputrow">
+        <label class="inputlabel">Email<span></span></label><br>
+        <input (focusout)="setEmail()" class="inputcustom" placeholder="Email Address" type="email" formControlName="email">
+        <!-- <div class="warning red-text font-error"
+          *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
+          Please Enter Email
+        </div> -->
+        <!-- <div class="warning red-text font-error" *ngIf="form.get('email')?.errors?.['pattern']">
+          Please Enter Valid Email
+        </div> -->
+      </div>
+      <div class="inputrow">
+        <label class="inputlabel">Pincode<span>*</span></label><br>
+        <input type="text" class="inputcustom" placeholder="PIN Code" maxlength="6" formControlName="pincode" NumberOnly
+          (keypress)="($event.charCode >= 48 && $event.charCode < 58)">
+        <div class="warning red-text font-error"
+          *ngIf="form.get('pincode')?.touched && form.get('pincode')?.errors?.['required']">
+          Please Enter Pincode
+        </div>
+        <div class="warning red-text font-error" *ngIf="form.get('pincode')?.errors?.['pattern']">
+          Please Enter Valid Pincode
+        </div>
+        <div class="warning red-text font-error"
+          *ngIf="form.get('pincode')?.errors?.['minlength'] && !form.get('pincode')?.errors?.['required']">
+          Please Enter Minimum 6 Digit.
+        </div>
+      </div>
+      <br>
+    </div>
+  </form>
+</div>
+
+</ion-content>
+
+<div class="footerbuttons">
+  <div class="row2float">
+    <button class="backbutton" (click)="prev()">Back</button>
+    <button class="getquotebutton" (click)="next()">Proceed</button>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<ion-content [fullscreen]="true">
+
+    <div class="header">
+      <div class="toolbar">
+        <div class="greeting">
+          <span>
+            Hello, Swarup!
+          </span>
+        </div>
+        <!-- <div class="tools">
+          <ion-icon class="tool" (click)="menu()" size="small" name="menu-outline"></ion-icon>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="totalquotes">
+      <i class="fa fa-group"></i> &nbsp; &nbsp;<span class="quotenumber">{{quotenumber}}</span><br>
+      <div class="space"></div>
+      <span class="totallabel">Total Quotes Generated</span>
+    </div>
+
+    
+
+<div class="slider">
+  <swiper-container [autoplay]="true">
+    <swiper-slide>
+      <img class="imageslider" src="https://d1510fwumr3byl.cloudfront.net/dist/1596430336/i/1bf0863467694d8c89b9c64c4d8e87e7.jpeg?v=1705039074" alt="Image">
+    </swiper-slide>
+
+    <swiper-slide>
+      <img class="imageslider"  src="https://d1510fwumr3byl.cloudfront.net/dist/1596430336/i/5745554528f04e4a8e0e1ea99a391b43.jpeg?v=1703063766" alt="Image">
+    </swiper-slide>
+    <swiper-slide >
+      <img class="imageslider"  src="https://d1510fwumr3byl.cloudfront.net/dist/1596430336/i/41c450b38bdc48c5a1180f451438cb94.jpeg?v=1704976028" alt="Image">
+    </swiper-slide>
+
+  </swiper-container>
+</div>
+
+    <!-- <div class="heading">
+      <span class="pastquotes">Past Quotes</span>
+      <span class="viewall">view all</span>
+    </div> -->
+    <!--  -->
+<br>
+<!--  -->
+    <!-- <div class="search">
+      <span class="placeholder"><i class="fa">&#xf002;</i> &nbsp; Search for past quotes</span>
+    </div> -->
+    <!--  -->
+    <!--  -->
+    <!-- <div class="tabs">
+      <button class="button">This Week</button>
+      <button class="button">This Month</button>
+      <button class="button">This Year</button>
+    </div> -->
+    <div class="nodata" *ngIf="show">
+      <br>
+      
+      <img style="height: 20vh;" src="assets/images/no_data.png">
+      
+      <br>
+      <span>No quotes to show.</span>
+    </div>
+    <div *ngIf="!show">
+      <div class="row">
+        <button class="deletebutton" (click)="deleteall()">Delete All</button>
+      </div>
+      
+      <div *ngFor="let quote of showarray;index as i">
+        <div class="card">
+          <div class="options">
+            <span  (click)="showQuote(quote.id)" class="name"><i class="fa">&#xf007;</i> &nbsp; &nbsp;{{quote.name}}</span>
+            <div class="actions">
+              <!-- <span class="shareicon"><i style="font-size:16px;color:rgb(211, 41, 41)" class="fa" >&#xf1e0;</i></span> &nbsp;&nbsp;&nbsp; -->
+              <span (click)="delete(quote.id)" class="shareicon"> <i style="font-size:24px;color:rgb(219, 57, 57)"
+                  class="fa">&#xf014;</i></span>
+            </div>
+          </div>
+          <span  (click)="showQuote(quote.id)" class="mobileno"><i class="fa">&#xf095;</i> &nbsp; {{quote.mobile}} &nbsp; <i class="fa">&#xf073;</i>
+            {{quote.date}}</span>
+          <div class="cost" (click)="showQuote(quote.id)" >
+            <div class="premium"  (click)="showQuote(quote)">
+              <div class="pricediv">
+                <span class="price"><i class="fa symbol">&#xf156;</i> {{quote.premium}}*<span
+                    class="year">/yr</span></span> &nbsp; &nbsp;              <span>Tenure: <span
+                      class="red">{{quote.tenure}}</span></span>
+    
+              </div>
+              <span class="mobileno" >{{quote.plan}}</span>
+              <br>
+
+            </div>
+            <!-- <div class="action">
+              <button class="buybutton"><span class="label">Buy Now</span></button>
+            </div> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="create" (click)="create()">
+      <!-- <span class="plus"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+          class="bi bi-plus" viewBox="0 0 16 16">
+          <path
+            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+        </svg></span> -->
+        <span class="plus">New +</span>
+    </div>
+
+  
+</ion-content>

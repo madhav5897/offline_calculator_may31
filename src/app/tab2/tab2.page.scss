@@ -1,0 +1,250 @@
+.table{
+    margin: 10px 5px 0px 5px;
+}
+.heading{
+    height: 40px;
+    font-size: medium;
+    font-weight: 600;
+}
+ion-col{
+    text-align: center;
+    // border: 1px solid rgb(244, 166, 166)
+}
+
+ion-row{
+    text-align: center;
+}
+.detailsbutton{
+    color: blue;
+    display: flex;
+    justify-content: right;
+}
+.details{
+    width: 100%;
+    margin: 5px 0px 5px 0px;
+    border: 1px solid rgb(245, 136, 136);
+    border-radius: 5px;
+    padding: 5px;
+    text-align: left;
+}
+.showless{
+display: flex;
+justify-content: right;
+padding: 10px 10px 0px 0px;
+}
+.title{
+    padding: 20px 0px 0px 20px;
+    color: rgb(28, 5, 5);
+}
+.toolbar{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.greeting{
+
+text-align: left;
+}
+.tools{
+    display: flex;
+    align-self: right;
+}
+
+.tool{
+    padding:  0px 5px 0px 5px;
+}
+.row{
+    height: 40px;
+    width: 100%;
+}
+.info{
+    margin: 15px;
+}
+.short{
+width: 100%;
+display: flex;
+justify-content: space-between;
+}
+.buttons{
+    color: blue;
+}
+
+
+$red:rgb(211, 31, 31);
+
+.tools{
+    display: flex;
+    align-self: right;
+    color: white;
+}
+.tool{
+    padding:  0px 8px 0px 8px;
+}
+
+.container{
+    padding: 10px;
+}
+.totalquotes{
+    height: 12%;
+    border:  2px solid rgb(232, 228, 228);
+    margin: 12px 12px 0px 12px ;
+    padding: 15px;
+    border-radius: 10px;  
+}
+.quotenumber{  
+    font-size: 1.5rem;
+font-weight: 600;
+color: rgb(83, 82, 82);
+height: fit-content;
+}
+.totallabel{
+     font-size: 1.1rem;
+     color: rgb(211, 31, 31);
+     font-weight: 600;
+}
+.fa-group{
+    font-size:18px;
+    color:rgb(210, 147, 147);
+}
+.space{
+    height:10px
+}
+.heading{
+    margin:0px 10px 10px 10px;
+    padding: 20px 5px 10px 5px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.pastquotes{
+font-size: 0.9rem;
+font-weight: 700;
+color: rgb(83, 82, 82);
+
+}
+
+.viewall{
+font-size: 0.9rem;
+font-weight: 600;
+color:rgb(211, 31, 31) ;
+}
+.search{
+    font-size: 0.9rem;
+padding: 0px 0px 10px 35px;
+// background-color: rgb(203, 203, 248);
+padding: 0px 15px 0px 15px;
+height: 40px;
+border-radius: 5px;
+}
+
+.placeholder{
+    font-size: 0.8rem;
+    font-weight: 600;
+    color:rgb(163, 160, 160) ;
+}
+.tabs{
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 20px 25px 20px;
+}
+.button{
+   font-size: 0.9rem; 
+   color: rgb(83, 82, 82);
+   height: 40px;
+   background-color: white;
+}
+.card{
+    height: 15%;
+    margin: 10px 10px 10px 10px;
+    padding: 0px 25px 0px 25px;
+
+}
+.name{
+font-size: 0.85rem;
+font-weight: 700;
+color: rgb(83, 82, 82) ;
+}
+.options{
+    display: flex;
+    justify-content: space-between;
+}
+.shareicon{
+    padding-top: 10px;
+    font-size: 1rem;
+    color: rgb(211, 31, 31) ;
+}
+.mobileno{
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgb(143, 141, 141);
+}
+.cost{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0px 0px 5px;
+    margin: 5px 0px 0px 0px ;
+}
+.fa{
+    // font-size: 21px;
+    // font-weight: 700;
+}
+.fa.symbol{
+    font-size: 01.1rem;
+    font-weight: 700;
+}
+.price{
+font-size: 1.1rem;
+font-weight: 700;
+color: rgb(83, 82, 82);
+}
+.year{
+font-size: 0.8rem;
+font-weight: 400;
+}
+.premium{
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+.buybutton{
+
+}
+.red{
+    color: rgb(211, 31, 31);
+}
+.action{
+    padding: 5px;
+}
+.buybutton{
+width: 70px;
+height: 30px;
+background-color: rgb(211, 31, 31);
+border-radius: 5px;
+}
+.label{
+color: white;
+font-size: 0.8rem;
+}
+.pricediv{
+    margin-bottom: 3px;
+}
+.create{
+background-color: $red;
+height:50px;
+width: 50px;
+border-radius: 100%;
+display: flex;
+justify-content: center;
+position: fixed;
+z-index: 1;
+bottom: 2%;
+right:7%
+}
+
+.plus{
+    color:rgb(33, 16, 16);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: white;
+    padding-top: 5px;
+}
+

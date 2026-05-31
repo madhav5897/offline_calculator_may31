@@ -1,0 +1,44 @@
+.buttons{
+    size: full;
+}
+.logout{
+    background-color: rgb(241, 46, 46);
+    color: white;
+    font-size: 16px;
+    font-weight:700;
+    width: 96%;
+    height: 40px;
+    text-align: center;
+    border-radius: 5px;
+    margin: 10px;
+}
+.row2{
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgb(65, 64, 64);
+}
+.row3{
+    font-size: 1rem;
+    font-weight: 700;
+    color: rgb(65, 64, 64);
+    text-align: center;
+    padding:  0px 20px 0px 20px ;
+}
+.avatarlarge{
+    display: flex;
+    justify-content: center;
+}
+.redline{
+   border: 2px solid rgb(252, 60, 60); 
+}
+.backinmenu{
+    margin: 20px;
+    height: 30px;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgb(248, 240, 240);
+    background-color: rgb(226, 41, 41);
+    width: 80px;
+    border-radius: 5px;
+}
+

@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true">
+<!-- hello -->
+<!-- <ion-loading isOpen="true" message="Loading..." duration="1000" spinner="circular" showBackdrop="true" translucent="false" ></ion-loading> -->
+
+  <div class="logocompany">
+    <img src="assets/images/logo2.png">
+    <div class="language">
+      <span>English </span>
+    </div>
+  </div>
+
+  <div class="logo">
+    <img class="top" src="assets/icons/anchor-full.png">
+  </div>
+
+<div class="welcome">
+<span>Welcome to Seller App</span>
+</div>
+
+<div class="login">
+<span>Login</span>
+</div>
+
+
+<br>
+<br>
+<div *ngIf="!otp" class="inputrow">
+  <br>
+  <label class="label"> &nbsp;&nbsp;IMD Code or Employee Code </label>
+  <input [(ngModel)]="IMDCode" class="inputcustom" placeholder="" type="text">
+</div>
+
+<div *ngIf="otp" class="inputrow">
+  
+  <p class="imdcode" > IMDCode &nbsp; {{IMDCode}} </p>
+  
+  <label class="label">Enter OTP </label>
+  <input class="inputcustom" placeholder="" type="text">
+</div>
+<!--  -->
+<div class="row2">
+<button class="proceed" *ngIf="!otp" (click)="otp=true">Get OTP</button>
+<button class="proceed" *ngIf="otp" (click)="proceed()">Submit</button>
+<br>
+
+</div>
+<br>
+<div class="buttonrow">
+  <button *ngIf="otp" class="button" (click)="otp=false;"> Back</button>
+</div>
+
+<!-- <div class="forgot">
+<span>Enter IMDCode</span>
+</div> -->
+
+</ion-content>

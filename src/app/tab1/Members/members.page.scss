@@ -1,0 +1,194 @@
+$red:rgb(211, 31, 31);
+$lightpink:rgb(249, 211, 219);
+$blue:rgb(226, 227, 237);
+$lightblue:rgb(230, 231, 241);
+$lightblack:rgb(129, 128, 128);
+
+.personaldetails{
+margin: 10px 20px 10px 20px;
+}
+.detailslabel{
+    font-size: 15px;
+    font-weight: 700;
+    color: rgb(42, 41, 41);   
+}
+.container{
+    min-height: 80vh;
+}
+
+.inputrow{
+background-color: rgb(237, 237, 248);
+margin: 10px 15px 10px 15px;
+border-radius: 5px;
+padding: 10px ;
+}
+.inputlabel{
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: rgb(149, 148, 148);
+
+}
+.inputcustom{
+background-color: white;
+height: 40px;
+width: 100%;
+ border: none;
+padding-left: 10px;
+border-radius: 5px;
+font-size: 12px;
+color: rgb(121, 120, 120);
+margin: 5px 0px 2px 0px;
+}
+.inputcustom:focus{
+   background-color:$lightblue;
+   border: none;
+}
+.next{
+    margin-left: 70%;
+}
+.buttons{
+    padding:5px;
+}
+.input{
+    border-radius: 5px;
+}
+.show{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 25px 40px 25px 40px;
+}
+.label{
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 13px;
+    color: $lightblack;
+}
+.label1{
+    width: 60vw;
+}
+.ageinput{
+    border-radius: 5px;
+    width: 200px;
+}
+.row{
+    display: flex;
+    justify-content: space-between;
+}
+.question{
+    font-size: 15px;
+    margin: 0px 0px 25px 20px;
+}
+.addmembers{
+    // min-height: 80vh;
+
+}
+.member{
+    margin: 10px 30px 10px 30px;
+    padding: 0px 10px 0px 10px;
+   display: flex;
+   justify-content: space-between; 
+   align-items: center;
+   background-color: $lightblue;
+}
+.emptybutton{
+    height: 100%;
+    width: 100%;
+    ;
+}
+
+.avatar{
+width: 12%;
+}
+.membertype{
+width: 25%;
+font-size: 13px;
+color: $lightblack;
+}
+.gender{
+    width: 20%;
+    font-size: 13px;
+    color: $lightblack;
+
+}
+.ageinput{
+width: 25%;
+}
+.toggle{
+width: 15%;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+.toggle2{
+    width: 20%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    }
+    
+.toggleself{
+    width: 25%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    }
+    
+.enterage{
+    border-radius: 5px;
+    font-size: 14px;
+    width: 90%;
+    border: none;
+    height: 40px;
+    background-color: rgb(238, 228, 229);
+}
+.fa{
+    color: rgb(79, 79, 80);
+    font-size: 22px;
+}
+.buttons{
+    margin:10px 30px 10px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+.backbutton{
+    width: 30%;
+    height:45px;
+    background-color:rgb(246, 234, 234);
+    border-radius: 10px; 
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $red;
+}
+.getquotebutton{
+    width: 30%;
+    height:45px;
+    background-color:$red;
+    border-radius: 10px; 
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: white;
+
+}
+.row2{
+    margin-top: 40px;
+}
+.row2float{
+    padding: 10px;
+    height: 70px;
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    background-color: rgb(251, 252, 253);
+}
+
+
+.red-text {
+    color: #d31f1f !important;
+    font-size: 12px;
+}
+.footerbuttons{
+    position: sticky;
+    right: 0px;
+    bottom: 1%;
+}

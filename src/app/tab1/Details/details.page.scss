@@ -1,0 +1,90 @@
+$red:rgb(211, 31, 31);
+$lightpink:rgb(249, 211, 219);
+$blue:rgb(226, 227, 237);
+$lightblue:rgb(230, 231, 241);
+$lightblack:rgb(129, 128, 128);
+
+.row{
+    margin: 15px 16px 10px 16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.heading{
+    font-size: 15px;
+    font-weight: 700;  
+    color: rgb(59, 59, 59); 
+}
+.fa.edit{
+font-size: 14px;
+color: rgb(198, 15, 15);
+}
+.row3{
+    margin: 16px;
+    display: flex;
+justify-content: flex-end;
+
+}
+.members{
+width:55%;
+}
+.cover{
+width: 30%;
+}
+.tenure{
+width: 15%;
+}
+.light{
+color: $lightblack;
+font-size: 14px;
+font-weight: 400;
+}
+.strong{
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 600;
+   color: rgb(81, 80, 80);
+   font-size: 14px;
+}
+.plantitle{
+    margin: 30px 20px 20px 20px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333333;
+}
+.card2{
+    margin: 10px 30px 10px 30px;
+    min-height: 20px;
+    display: flex;
+    justify-content: space-between;
+    }
+    .icon{
+        // padding-top: 5px;
+    width: 30px;
+    height: 30px;
+    }
+    .name{
+        padding: 4px 0px 0px 10px;
+    width: 60%;
+    font-size: 14px;
+    font-weight: 700;
+    color: rgb(90, 89, 89);
+    }
+    .arrow{
+    width: 30%;
+    padding: 5px 0px 0px 25%;
+    }
+    .next{
+        margin: 20px 20px 20px 20px ;
+        position: absolute;
+        right:5px;
+        bottom: 5%;
+        width: 90%;
+
+    }
+    .proceed{
+        height: 40px;
+    }
+
+    
+    

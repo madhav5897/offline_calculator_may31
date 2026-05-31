@@ -1,0 +1,55 @@
+$red:rgb(211, 31, 31);
+$lightpink:rgb(249, 211, 219);
+$blue:rgb(226, 227, 237);
+$lightblue:rgb(230, 231, 241);
+$lightblack:rgb(129, 128, 128);
+
+
+
+
+// footer
+
+.footer2{
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    width: 96%;
+        }
+    .planname{
+    font-size: 11px;
+    font-weight: 600;
+    color: rgb(90, 89, 89);
+    }
+    .pricefooter{
+    margin: 10px 0px 10px 0px ;
+    }
+    .pricedigits{
+    font-size: 18px;
+    font-weight: 700;
+    }
+    .yearfooter{
+        font-size: 14px;
+        font-weight: 400;
+    }
+    .cover2{
+    font-size: 12px;
+    font-weight: 600;
+    }
+    .red{
+        color: $red;
+    }
+    .nextbutton{
+    padding: 10px;
+    }
+    .next{
+    height: 50px;
+    width: 100px;
+    background-color: $red;
+    border-radius: 8px;
+    font-size: 14px;
+    color: white;
+    font-weight: 600;
+    }
+    
+        
+    

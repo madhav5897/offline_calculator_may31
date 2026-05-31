@@ -1,0 +1,121 @@
+$red:rgb(211, 31, 31);
+$lightpink:rgb(249, 211, 219);
+$blue:rgb(226, 227, 237);
+$lightblue:rgb(230, 231, 241);
+$lightblack:rgb(129, 128, 128);
+
+.logocompany{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 15px 10px 15px;
+    height: 50px;
+  
+}
+.input{
+    font-size: 0.9rem;
+    border-bottom: 1px solid black;
+}
+
+.logo{
+    padding: 40% 20px 20px 20px;
+}
+.top{
+    position: absolute;
+    margin-left: 36%;
+margin-top: -13%;
+    width: 18%;
+}
+.bottom{
+    position: absolute;
+    margin-left: 39%;
+    margin-top: -7%;
+}
+.welcome{
+margin: 20px;
+text-align: center;
+font-size: 1.4rem;
+font-weight: 500;
+color: rgb(45, 45, 45);
+}
+.login{
+margin: 30px 20px 20px 20px;
+text-align: center;
+font-size: 1rem;
+font-weight: 700;
+color: rgb(106, 104, 104);
+
+}
+.inputrow{
+    margin: 25px 15px 5px 15px;
+    border-radius: 5px;
+    padding: 5px ;
+}
+.label{
+font-weight: 600;
+color: $lightblack;
+font-size: 0.9rem;
+}
+
+.inputcustom{
+    margin-top: 10px;
+    background-color: rgb(251, 239, 239);
+    height: 50px;
+    width: 100%;
+    border: none;
+    padding-left: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    }
+    .inputcustom:focus{
+       background-color:$lightblue;
+       border: none;
+    }
+    
+
+.forgot{
+    padding: 18px ;
+    text-align: center;
+    color: rgb(251, 84, 84);
+    font-weight: 600;
+    font-size: 0.8rem;
+}
+.language{
+    padding: 10px 0px 0px 20px ;
+    font-weight: 700;
+}
+.loader{
+    height: 100%;
+    width:100%;
+    padding-top: 45%;
+    align-items: center;
+}
+.loader {
+    border: 16px solid #f3f3f3; /* Light grey */
+    border-top: 16px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+  }
+  .imdcode{
+    font-size: 12px;
+    font-weight: 700;
+    color: rgb(232, 62, 62);
+  }
+  .buttonrow{
+    display: flex;
+    justify-content: center;
+  }
+  .button{
+    height: 40px;
+    width: 100px;
+    color: red;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: white;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

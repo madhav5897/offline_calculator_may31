@@ -1,0 +1,191 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<ion-content [fullscreen]="true">
+
+  <div style="min-height: 80vh;">
+
+    <div *ngIf="!pdfpage">
+      <!-- <div class="pagegreen">
+        <div class="successfully">
+          <p class="label">Quote Generated Successfully...</p>
+        </div>
+        <div class="line"></div>
+        <div class="cardsummary">
+          <p>Name : {{quote.name}}</p>
+          <P>Plan : {{quote.plan}}</P>
+          <p>Tenure : {{quote.tenure}}</p>
+          <p>Premium : {{quote.premium}} /-</p>
+        </div>
+      </div>
+
+      <div class="pdfrow">
+        <button class="pdfbutton" (click)="pdfpage=true;pdf()">Download PDF &nbsp; <i
+            style="font-size:14px; color: white;" class="fa">&#xf019;</i></button>
+      </div>
+ -->
+    </div>
+
+    <div *ngIf="pdfpage">
+
+      <div id="PrintInvoice" class="invoice-box">
+
+        <div class="logo">
+          <img class="logocompany" src="assets/images/logo2.png">
+          <div class="sellerdetail">
+            <p class="text">Swarup Jain</p>
+            <p class="text">9898987878</p>
+          </div>
+        </div>
+        <br>
+        <p class="text">Date &nbsp;{{quote.date}}</p>
+        <br>
+        <div>
+          <div class="title">
+            <p class="text">Proposer Details </p>
+          </div>
+          <br>
+
+          <p class="text">Name &nbsp;{{quote.name}}</p>
+          <p class="text">Mobile &nbsp;{{quote.mobile}}</p>
+          <p *ngIf="quote.email" class="text">Email &nbsp;{{quote.email}}</p>
+          <p class="text">Pincode &nbsp;{{quote.pincode}}</p>
+
+          <p *ngIf="quote.address!=='' "  class="text">Address &nbsp;{{quote.address}}</p>
+        </div>
+        <br>
+
+        <div>
+          <div class="title">
+            <p class="text">Quote Details</p>
+          </div>
+          <br>
+
+          <div class="tablerow">
+            <div>
+              <p class="text">Insuring</p>
+            </div>
+            <div>
+              <p class="text">{{quote.memberstring}}</p>
+            </div>
+          </div>
+          <div class="tablerow">
+            <div>
+              <p class="text">Product</p>
+            </div>
+            <div>
+              <p class="text">{{quote.plan}}</p>
+            </div>
+          </div>
+          <div class="tablerow">
+            <div>
+              <p class="text">PolicyType</p>
+            </div>
+            <div>
+              <p class="text">{{quote.policytype}}</p>
+            </div>
+          </div>
+          <div class="tablerow">
+            <div>
+              <p class="text">Tenure</p>
+            </div>
+            <div>
+              <p class="text">{{quote.tenure}}</p>
+            </div>
+          </div>
+          <div class="tablerow" *ngIf="quote.policytype=='FamilyFloater' ">
+            <div>
+              <p class="text2">Sum Insured</p>
+            </div>
+            <div>
+              <p class="text">{{quote.sum}}</p>
+            </div>
+          </div>
+
+          <div *ngIf="quote.policytype!=='FamilyFloater' ">
+            <div class="tablerow">
+              <div>
+                <p class="text2">Sum Insured</p>
+              </div>
+            </div>
+            <div>
+            </div>
+            <div class="sumcard" *ngFor="let sum of sumarr">
+              <div>
+                <p class="text">{{sum.member}}</p>
+              </div>
+              <div>
+                <p class="text">{{sum.suminlakhs}} /-</p>
+              </div>
+            </div>
+          </div>
+
+
+          <br>
+          <!-- <div class="title">
+            <p class="text">Total :</p>
+          </div>
+          <br>
+ -->
+
+          <div class="tablerow">
+            <div>
+              <p class="text">Base Premium</p>
+            </div>
+            <div>
+              <p class="text">{{quote.premium}} /-</p>
+            </div>
+          </div>
+
+          <div *ngIf="arraylength!==0 " >
+            <p class="text2">Covers :</p>
+          </div>
+          <div *ngFor="let cover of coverarray">
+            <div class="tablerow">
+              <div>
+                <p class="text">{{cover.name}}</p>
+              </div>
+              <div>
+                <p class="text">{{cover.premium}} /-</p>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="tablerow">
+            <div>
+              <p class="text">GST</p>
+            </div>
+            <div>
+              <p class="text">{{quote.gst}} /-</p>
+            </div>
+          </div>
+          <div class="tablerow">
+            <div>
+              <p class="text">Total Premium</p>
+            </div>
+            <div>
+              <p class="text">{{quote.finalpremium}} /-</p>
+            </div>
+          </div>
+
+
+
+        </div>
+
+
+        <br>
+      </div>
+      <br>
+    </div>
+
+    <!-- <div class="backrow">
+        <button class="backbutton" (click)="screenshot()">Download &nbsp; </button>
+      </div> -->
+  </div>
+
+  <div class="sharerow">
+    <button class="proceed" (click)="home()">Back To Home</button>
+  </div>
+
+</ion-content>

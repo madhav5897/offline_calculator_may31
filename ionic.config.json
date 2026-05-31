@@ -1,0 +1,8 @@
+{
+  "name": "ABHI-Karo-Calculate",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "107b181f"
+}

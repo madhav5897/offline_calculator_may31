@@ -1,0 +1,139 @@
+
+.pdfrow{
+    margin:20px;
+    display: flex;
+    justify-content: right;
+}
+
+.pdfbutton{
+    height: 40px;
+    width: 37%;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: rgb(219, 23, 23);
+    border-radius: 5px;
+}
+.backrow{
+    margin:10px;
+    display: flex;
+    justify-content: right;
+}
+.backbutton{
+    height: 40px;
+    width: 22%;
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    background-color: rgb(219, 23, 23);
+    border-radius: 5px;
+}
+
+.pagegreen{
+    background-color: rgb(251, 253, 251);
+    min-height:80vh;
+    margin: 0px 0px 50px 0px;
+    border-radius: 0px 0px 5px 5px;
+
+    
+}
+.successfully{
+    margin: 0px 20px 20px 20px;
+    padding-top: 10vh;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 900;
+    color: rgb(93, 91, 91);
+}
+.line{
+    height: 2px;
+    margin: 50px 10px 30px 10px;
+    border: 2px solid rgb(23, 140, 48);
+}
+.button{
+   height: 100px;
+   width: 100px;
+   border-radius: 100%; 
+   background-color: rgb(65, 105, 76);
+}
+.label{
+    // margin-top: 100px;
+}
+.sharerow{
+    width: 94%;
+    margin: 16px;
+    // position: absolute;
+    // right: 0%;
+    // bottom: 0%;
+}
+.cardsummary{
+    margin-top: 60vh;
+    margin:10px;
+    padding:10px;
+    border-radius: 5px;
+    background-color:white;
+    font-size: 13px;
+    font-weight: 700;
+    color: rgb(72, 71, 71);
+    text-align: left;
+}
+
+/// pdf
+
+.invoice-box{
+   padding: 10px;
+   margin: 10px;
+   border: 1px solid rgb(153, 152, 152);
+   border-radius: 5px;
+   min-height: 80vh;
+}
+.logo{
+    display: flex;
+    justify-content: space-between;
+}
+.logocompany{
+    height: 45px;
+    width: 50%;
+}
+.sellerdetail{
+    font-size: 13px;
+    font-weight: 700;
+    width: 30%;
+    text-align: left;
+}
+.text{
+    margin: 5px;
+    padding: 0px;
+    height: 16px;
+    width: 100%;
+}
+.text2{
+    margin: 5px;
+    padding: 0px;
+    height: 16px;
+    width: 100%;
+    font-weight: 800;
+    font-size: 12px;
+}
+
+.title{
+    background-color: rgb(248, 208, 208);
+    height: 36px;
+    padding-top: 5px;
+}
+.total{
+    width: 40%;
+    margin-left: 55%;
+}
+.tablerow{
+    display: flex;
+    justify-content: space-between;
+}
+.sumcard{
+    margin: 0% 1% 0% 65%;
+    display: flex;
+    justify-content: space-between;
+
+}
+
+

@@ -1,0 +1,220 @@
+$red:rgb(211, 31, 31);
+
+.tools{
+    display: flex;
+    align-self: right;
+    color: white;
+}
+.tool{
+    padding:  0px 8px 0px 8px;
+}
+
+.container{
+    padding: 10px;
+}
+.totalquotes{
+    height: 12%;
+    // border:  2px solid rgb(232, 228, 228);
+    margin: 12px 12px 0px 12px ;
+    padding: 15px;
+    border-radius: 10px;  
+    background-color: rgb(252, 244, 244);
+}
+.quotenumber{  
+    font-size: 1.5rem;
+font-weight: 600;
+color: rgb(83, 82, 82);
+height: fit-content;
+}
+.totallabel{
+     font-size: 1.1rem;
+     color: rgb(231, 34, 34);
+     font-weight: 600;
+}
+.fa-group{
+    font-size:18px;
+    color:rgb(210, 147, 147);
+}
+.space{
+    height:10px
+}
+.heading{
+    margin:0px 10px 10px 10px;
+    padding: 20px 25px 10px 25px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.pastquotes{
+font-size: 0.8rem;
+font-weight: 700;
+color: rgb(135, 134, 134);
+
+}
+
+.viewall{
+font-size: 0.9rem;
+font-weight: 600;
+color:rgb(224, 45, 45) ;
+}
+.search{
+font-size: 0.9rem;
+padding: 0px 0px 10px 35px;
+height: 40px;
+border-radius: 5px;
+}
+
+.placeholder{
+    font-size: 0.8rem;
+    font-weight: 600;
+    color:rgb(163, 160, 160) ;
+}
+.tabs{
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 60px 25px 60px;
+}
+.button{
+   font-size: 0.8rem; 
+   font-weight: 700;
+   color: rgb(170, 168, 168);
+   height: 40px;
+   background-color: white;
+}
+.row{
+    margin: 0px 20px 5px 20px ;
+    height: 35px;
+    display: flex;
+    justify-content: right;
+}
+.deletebutton{
+    color: white;
+    background-color: rgb(213, 44, 44);
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 5px;
+    width: 100px;
+}
+
+.card{
+    height: 15%;
+    margin: 10px 10px 10px 10px;
+    padding: 10px 15px 10px 15px;
+    border-radius: 5px;
+    background-color: rgb(252, 240, 240);
+
+}
+.actions{
+    display: flex;
+    justify-content: right;
+}
+.name{
+font-size: 0.85rem;
+font-weight: 700;
+color: rgb(83, 82, 82) ;
+}
+.options{
+    display: flex;
+    justify-content: space-between;
+}
+.shareicon{
+    // padding-top: 10px;
+    font-size: 1rem;
+    color: rgb(211, 31, 31) ;
+}
+.mobileno{
+    font-size: 0.8rem;
+    font-weight: 400;
+    color: rgb(143, 141, 141);
+}
+.cost{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0px 0px 5px;
+    margin: 5px 0px 0px 0px ;
+}
+.fa{
+    // font-size: 21px;
+    // font-weight: 700;
+}
+.fa.symbol{
+    font-size: 01.1rem;
+    font-weight: 700;
+}
+.price{
+font-size: 1.1rem;
+font-weight: 700;
+color: rgb(83, 82, 82);
+}
+.year{
+font-size: 0.8rem;
+font-weight: 400;
+}
+.premium{
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+.buybutton{
+
+}
+.red{
+    color: rgb(211, 31, 31);
+}
+.action{
+    padding: 5px;
+}
+.buybutton{
+width: 70px;
+height: 30px;
+background-color: rgb(211, 31, 31);
+border-radius: 5px;
+}
+.label{
+color: white;
+font-size: 0.8rem;
+}
+.pricediv{
+    margin-bottom: 3px;
+}
+.create{
+background-color: $red;
+height:42px;
+width: 80px;
+border-radius: 5px;
+display: flex;
+justify-content: center;
+position: fixed;
+z-index: 1;
+bottom: 2%;
+right:7%;
+
+}
+
+.plus{
+    color:rgb(33, 16, 16);
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: white;
+    padding-top: 10px;
+}
+
+.nodata{
+    margin:10px;
+    padding: 20px;
+    font-size: 0.9rem;
+font-weight: 700;
+color: rgb(129, 128, 128);
+text-align: center;
+
+
+}
+.slider{
+    margin: 10px;
+    //  max-height: 25vh;
+}
+.imageslider{
+     height: 29vh;
+    width: 100%;
+    border-radius: 25px;
+
+}
