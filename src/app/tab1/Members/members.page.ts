@@ -97,16 +97,16 @@ localStorage.setItem('firstname',this.form.value.firstname)
 
     // this.quotearray=localStorage.getItem('quotearray'
     
-    this.quoteobject.name = this.form.value.firstname + ' ' + this.form.value.lastname;
-    this.quoteobject.mobile = this.form.value.mobile;
-    // this.quoteobject.sum=localStorage.getItem('sum')
+    // this.quoteobject.name = this.form.value.firstname + ' ' + this.form.value.lastname;
+    // this.quoteobject.mobile = this.form.value.mobile;
+    // this.quoteobject.sum = localStorage.getItem('sum')
 
     const date = new Date();
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     let currentDate = `${day}-${month}-${year}`;
-    this.quoteobject.date = currentDate;
+    // this.quoteobject.date = currentDate;
 
     let p:[]=JSON.parse (localStorage.getItem('quotearray'));
     console.log(p)
@@ -118,7 +118,7 @@ localStorage.setItem('firstname',this.form.value.firstname)
     let arr=this.quotearray.length
     l = arr;
     console.log('arraylength  >> ' +l)
-    this.quoteobject.id = Date.now();
+    // this.quoteobject.id = Date.now();
     
     if(this.quotearray!==null){
       this.quotearray[l] = this.quoteobject;

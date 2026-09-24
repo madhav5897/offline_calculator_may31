@@ -41,8 +41,8 @@ export class SuccessfulComponent implements OnInit {
         this.setquote()
       }
     })
-    this.coverarray = this.quote.covers;
-    this.arraylength=this.coverarray.length;
+    // this.coverarray = this.quote.covers;
+    // this.arraylength=this.coverarray.length;
     this.quotedetail = localStorage.getItem('details');
     this.test = this.storageService.get('array');
     // this.screenshot();
@@ -56,7 +56,7 @@ export class SuccessfulComponent implements OnInit {
   setquote() {
     if (localStorage.getItem('quoteid') == 'Empty') {
       this.quote = this.quoteService.quoteObject;
-      this.sumarr=this.quote.sum
+      // this.sumarr=this.quote.sum
     
     }
     else {
@@ -67,11 +67,11 @@ export class SuccessfulComponent implements OnInit {
 
       if (arr !== null) {
         this.quote = arr.filter((x: any) => {
-          return x.id == id;
+          // return x.id == id;
         })
       }
-      this.quote = this.quote[0];
-      this.sumarr=(this.quote.sum);
+      // this.quote = this.quote[0];
+      // this.sumarr=(this.quote.sum);
     
       
     }
