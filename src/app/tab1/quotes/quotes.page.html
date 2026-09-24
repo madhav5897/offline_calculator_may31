@@ -70,24 +70,27 @@
       <div *ngFor="let quote of showarray;index as i">
         <div class="card">
           <div class="options">
-            <span  (click)="showQuote(quote.id)" class="name"><i class="fa">&#xf007;</i> &nbsp; &nbsp;{{quote.name}}</span>
+            <!-- <span  (click)="showQuote(quote.id)" class="name"><i class="fa">&#xf007;</i> &nbsp; &nbsp;{{quote.name}}</span> -->
+            <span  (click)="showQuote(quote.id)" class="name"><i class="fa">&#xf007;</i> &nbsp; &nbsp;Atul Jadhav</span>
+
             <div class="actions">
               <!-- <span class="shareicon"><i style="font-size:16px;color:rgb(211, 41, 41)" class="fa" >&#xf1e0;</i></span> &nbsp;&nbsp;&nbsp; -->
               <span (click)="delete(quote.id)" class="shareicon"> <i style="font-size:24px;color:rgb(219, 57, 57)"
                   class="fa">&#xf014;</i></span>
             </div>
           </div>
-          <span  (click)="showQuote(quote.id)" class="mobileno"><i class="fa">&#xf095;</i> &nbsp; {{quote.mobile}} &nbsp; <i class="fa">&#xf073;</i>
-            {{quote.date}}</span>
-          <div class="cost" (click)="showQuote(quote.id)" >
-            <div class="premium"  (click)="showQuote(quote)">
+          <!-- <span  (click)="showQuote(quote.id)" class="mobileno"><i class="fa">&#xf095;</i> &nbsp; {{quote.mobile}} &nbsp; <i class="fa">&#xf073;</i> -->
+            <!-- {{quote.date}}</span> -->
+          <!-- <div class="cost" (click)="showQuote(quote.id)" > -->
+            <!-- <div class="premium"  (click)="showQuote(quote)"> -->
               <div class="pricediv">
-                <span class="price"><i class="fa symbol">&#xf156;</i> {{quote.premium}}*<span
-                    class="year">/yr</span></span> &nbsp; &nbsp;              <span>Tenure: <span
-                      class="red">{{quote.tenure}}</span></span>
+                <!-- <span class="price"><i class="fa symbol">&#xf156;</i> {{quote.premium}}*<span -->
+                     <!-- class="year">/yr</span></span> &nbsp; &nbsp;             -->
+                       <!-- <span>Tenure: <span -->
+                      <!-- class="red">{{quote.tenure}}</span></span> -->
     
               </div>
-              <span class="mobileno" >{{quote.plan}}</span>
+              <!-- <span class="mobileno" >{{quote.plan}}</span> -->
               <br>
 
             </div>
@@ -97,8 +100,8 @@
           </div>
 
         </div>
-      </div>
-    </div>
+      <!-- </div>
+    </div> -->
 
 
 
